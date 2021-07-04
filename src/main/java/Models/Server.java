@@ -41,6 +41,7 @@ public class Server {
             try {
                 Socket socket = serverSocket.accept();
                 String tocken = "";
+                new PlayerThread(socket, this, tocken).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
