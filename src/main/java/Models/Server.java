@@ -16,7 +16,7 @@ public class Server {
 
     private HashMap<Integer, Game> games;
 
-    private ArrayDeque<Player> waitedPlayer;
+    private ArrayDeque<Player> waitingPlayer;
 
     private Server(){
         try {
@@ -24,7 +24,7 @@ public class Server {
             this.playersThreads = new HashMap<>();
             this.onlinePlayers = new HashMap<>();
             this.games = new HashMap<>();
-            this.waitedPlayer = new ArrayDeque<>();
+            this.waitingPlayer = new ArrayDeque<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,16 +49,16 @@ public class Server {
     }
 
     public boolean isThereWaitingPlayer(){
-        return !waitedPlayer.isEmpty();
+        return !waitingPlayer.isEmpty();
     }
 
     public void addWaitingPlayer(Player player){
-        waitedPlayer.addLast(player);
+        waitingPlayer.addLast(player);
     }
 
     public Player getWaitingPlayer(){
-        Player player = waitedPlayer.getFirst();
-        waitedPlayer.removeFirst();
+        Player player = waitingPlayer.getFirst();
+        waitingPlayer.removeFirst();
         return player;
     }
 
