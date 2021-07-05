@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.*;
 
 public class Server {
-    private final static int port = 9595;
+    private final static int PORT = 9595;
 
     private ServerSocket serverSocket;
     private Server instance = null;
@@ -20,7 +20,7 @@ public class Server {
 
     private Server(){
         try {
-            this.serverSocket = new ServerSocket(port);
+            this.serverSocket = new ServerSocket(PORT);
             this.playersThreads = new HashMap<>();
             this.onlinePlayers = new HashMap<>();
             this.games = new HashMap<>();
@@ -40,19 +40,19 @@ public class Server {
         while (true){
             try {
                 Socket socket = serverSocket.accept();
-                String tocken = "";
-                new PlayerThread(socket, this, tocken).start();
+                String token = "";
+                new PlayerThread(socket, this, token).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public boolean haveWeWaitedPlayer(){
+    public boolean isThereWaitingPlayer(){
         return !waitedPlayer.isEmpty();
     }
 
-    public void addWaitedPlayer(Player player){
+    public void addWaitingPlayer(Player player){
         waitedPlayer.addLast(player);
     }
 
