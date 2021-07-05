@@ -5,13 +5,11 @@ import java.net.Socket;
 
 public class PlayerThread extends Thread{
     private String playerToken;
-    private Server server;
     private Socket playerSocket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public PlayerThread(Socket playerSocket, Server server, String playerToken) {
-        this.server = server;
+    public PlayerThread(Socket playerSocket, String playerToken) {
         this.playerSocket = playerSocket;
         this.playerToken = playerToken;
         try {
@@ -30,8 +28,8 @@ public class PlayerThread extends Thread{
             String[] details;
 
             while (true){
-                input = dataInputStream.readUTF();
-                String[] split = input.split(" ");
+                input = dataInputStream.readUTF(); // Waiting for command from client
+                String[] split = input.split(" "); // token command CommandPhrasesK
                 output = null;
 
 

@@ -9,7 +9,7 @@ public class Server {
     private final static int PORT = 9595;
 
     private ServerSocket serverSocket;
-    private Server instance = null;
+    private static Server instance = null;
 
     private HashMap<String, Thread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
@@ -30,7 +30,7 @@ public class Server {
         }
     }
 
-    public Server getInstance(){
+    public static Server getInstance(){
         if (instance == null)
             instance = new Server();
         return instance;
@@ -41,7 +41,7 @@ public class Server {
             try {
                 Socket socket = serverSocket.accept();
                 String token = "";
-                new PlayerThread(socket, this, token).start();
+                new PlayerThread(socket, token).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
