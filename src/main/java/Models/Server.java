@@ -6,18 +6,21 @@ import util.ConfigLoader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.SecureRandom;
 import java.util.*;
 
 public class Server {
     private final static int PORT = Integer.parseInt(ConfigLoader.readProperty("port"));
 
     private ServerSocket serverSocket;
+    private SecureRandom secureRandom;
     private static Server instance;
 
 
     private Server(){
         try {
             this.serverSocket = new ServerSocket(PORT);
+            this.secureRandom = new SecureRandom();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,14 +34,23 @@ public class Server {
 
     public void run(){
         Repository.getInstance().initialize();
+        SecureRandom secureRandom = new SecureRandom();
         while (true){
             try {
                 Socket socket = serverSocket.accept();
-                String token = "";
-                new PlayerThread(socket, token).start();
+                String token = generateToken();
+                new PlayerThread(socket, token);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String generateToken() {
+        byte bytes[] = new byte[20];
+        secureRandom.nextBytes(bytes);
+        Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        String token = encoder.encodeToString(bytes);
+        return token;
     }
 }

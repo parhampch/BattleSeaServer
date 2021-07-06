@@ -18,9 +18,11 @@ public class PlayerThread extends Thread{
         try {
             dataInputStream = new DataInputStream(new BufferedInputStream(playerSocket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(playerSocket.getOutputStream()));
+            dataOutputStream.writeUTF(playerToken);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.start();
     }
 
     @Override
