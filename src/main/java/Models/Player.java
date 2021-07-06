@@ -5,7 +5,7 @@ public class Player {
     private String password;
     private long score;
 
-    public Player(String username, String password, long score) {
+    public Player(String username, String password) {
         this.username = username;
         this.password = password;
         this.score = 0;

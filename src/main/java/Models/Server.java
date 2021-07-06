@@ -1,5 +1,6 @@
 package Models;
 
+import Repository.Repository;
 import util.ConfigLoader;
 
 import java.io.IOException;
@@ -13,20 +14,10 @@ public class Server {
     private ServerSocket serverSocket;
     private static Server instance;
 
-    private HashMap<String, Thread> playersThreads;
-    private HashMap<String, Player> onlinePlayers;
-
-    private HashMap<Integer, Game> games;
-
-    private ArrayDeque<Player> waitingPlayer;
 
     private Server(){
         try {
             this.serverSocket = new ServerSocket(PORT);
-            this.playersThreads = new HashMap<>();
-            this.onlinePlayers = new HashMap<>();
-            this.games = new HashMap<>();
-            this.waitingPlayer = new ArrayDeque<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,20 +41,4 @@ public class Server {
             }
         }
     }
-
-    public boolean isThereWaitingPlayer(){
-        return !waitingPlayer.isEmpty();
-    }
-
-    public void addWaitingPlayer(Player player){
-        waitingPlayer.addLast(player);
-    }
-
-    public Player getWaitingPlayer(){
-        Player player = waitingPlayer.getFirst();
-        waitingPlayer.removeFirst();
-        return player;
-    }
-
-
 }

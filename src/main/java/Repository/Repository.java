@@ -1,19 +1,31 @@
-package Models;
+package Repository;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+
+import Models.Game;
+import Models.Player;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Repository {
     public ArrayList<Player> allPlayers;
     private static Repository instance;
+    private HashMap<String, Thread> playersThreads;
+    private HashMap<String, Player> onlinePlayers;
+    private HashMap<Integer, Game> games;
+    private ArrayDeque<Player> waitingPlayer;
 
     private Repository(){
-        allPlayers = new ArrayList<>();
+        this.allPlayers = new ArrayList<>();
+        this.playersThreads = new HashMap<>();
+        this.onlinePlayers = new HashMap<>();
+        this.games = new HashMap<>();
+        this.waitingPlayer = new ArrayDeque<>();
     }
 
     public static Repository getInstance(){
@@ -43,8 +55,8 @@ public class Repository {
         return true;
     }
 
-    public void addPlayer(Player player){
-        allPlayers.add(player);
+    public void addPlayer(String username, String password){
+        allPlayers.add(new Player(username, password));
         this.saveData();
     }
 
@@ -80,4 +92,23 @@ public class Repository {
             e.printStackTrace();
         }
     }
+
+    public boolean isThereWaitingPlayer(){
+        return !waitingPlayer.isEmpty();
+    }
+
+    public void addWaitingPlayer(String token){
+        waitingPlayer.addLast(onlinePlayers.get(token));
+    }
+
+    public Player getWaitingPlayer(){
+        Player player = waitingPlayer.getFirst();
+        waitingPlayer.removeFirst();
+        return player;
+    }
+
+    public void addOnlinePlayer(String token, String username){
+        onlinePlayers.put(token, getPlayer(username));
+    }
+
 }
