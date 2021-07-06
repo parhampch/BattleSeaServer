@@ -39,6 +39,7 @@ public class Server {
     }
 
     public void run(){
+        Repository.getInstance().initialize();
         while (true){
             try {
                 Socket socket = serverSocket.accept();
