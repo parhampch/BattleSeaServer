@@ -1,12 +1,14 @@
 package Models;
 
+import util.ConfigLoader;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
 public class Server {
-    private final static int PORT = 9595;
+    private final static int PORT = Integer.parseInt(ConfigLoader.readProperty("port"));
 
     private ServerSocket serverSocket;
     private static Server instance = null;
