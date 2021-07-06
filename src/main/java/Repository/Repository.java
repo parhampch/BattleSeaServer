@@ -18,7 +18,8 @@ public class Repository {
     private HashMap<String, Thread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
     private HashMap<Integer, Game> games;
-    private ArrayDeque<Player> waitingPlayer;
+    private ArrayDeque<String> waitingPlayer;
+    private HashMap<String, Game> gameOfPlayers;
 
     private Repository(){
         this.allPlayers = new ArrayList<>();
@@ -26,6 +27,7 @@ public class Repository {
         this.onlinePlayers = new HashMap<>();
         this.games = new HashMap<>();
         this.waitingPlayer = new ArrayDeque<>();
+        this.gameOfPlayers = new HashMap<>();
     }
 
     public static Repository getInstance(){
@@ -98,17 +100,24 @@ public class Repository {
     }
 
     public void addWaitingPlayer(String token){
-        waitingPlayer.addLast(onlinePlayers.get(token));
+        waitingPlayer.addLast(token);
     }
 
-    public Player getWaitingPlayer(){
-        Player player = waitingPlayer.getFirst();
+    public String getWaitingPlayer(){
+        String token = waitingPlayer.getFirst();
         waitingPlayer.removeFirst();
-        return player;
+        return token;
     }
 
     public void addOnlinePlayer(String token, String username){
         onlinePlayers.put(token, getPlayer(username));
     }
+
+    public void addGame(String token1, String token2, Game game){
+        gameOfPlayers.put(token1, game);
+        gameOfPlayers.put(token2, game);
+    }
+
+
 
 }

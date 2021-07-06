@@ -4,6 +4,7 @@ import Repository.Repository;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Random;
 
 public class PlayerThread extends Thread{
     private String playerToken;
@@ -54,9 +55,15 @@ public class PlayerThread extends Thread{
                 else if (command.equals("newGame")){
                     if (!Repository.getInstance().isThereWaitingPlayer()){
                         Repository.getInstance().addWaitingPlayer(token);
+                        output = "0";
                     }
-                    // todo : handle new game
-                    output = "1";
+                    else {
+                        int turn = new Random().nextInt() % 2;
+                        String secondToken = Repository.getInstance().getWaitingPlayer();
+                        Game game = new Game(token, secondToken, turn);
+                        Repository.getInstance().addGame(token, secondToken, game);
+                        output = "1";
+                    }
                 }
 
 
