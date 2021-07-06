@@ -11,7 +11,7 @@ public class Server {
     private final static int PORT = Integer.parseInt(ConfigLoader.readProperty("port"));
 
     private ServerSocket serverSocket;
-    private static Server instance = null;
+    private static Server instance;
 
     private HashMap<String, Thread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
