@@ -37,8 +37,10 @@ public class Server {
         SecureRandom secureRandom = new SecureRandom();
         while (true){
             try {
+                System.out.println("Waiting for client ...");
                 Socket socket = serverSocket.accept();
                 String token = generateToken();
+                System.out.println("Client with token" + token + "connected");
                 new PlayerThread(socket, token);
             } catch (IOException e) {
                 e.printStackTrace();
