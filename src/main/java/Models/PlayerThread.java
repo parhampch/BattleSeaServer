@@ -28,6 +28,8 @@ public class PlayerThread extends Thread{
 
     @Override
     public void run(){
+        //todo: request death on thread (close)
+
         try{
             String input;
             String output;
