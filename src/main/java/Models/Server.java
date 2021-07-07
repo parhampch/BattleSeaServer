@@ -40,7 +40,7 @@ public class Server {
                 System.out.println("Waiting for client ...");
                 Socket socket = serverSocket.accept();
                 String token = generateToken();
-                System.out.println("Client with token" + token + "connected");
+                System.out.println("Client with token " + token + " connected");
                 new PlayerThread(socket, token);
             } catch (IOException e) {
                 e.printStackTrace();
