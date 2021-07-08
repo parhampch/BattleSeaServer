@@ -21,6 +21,7 @@ public class PlayerThread extends Thread{
             dataInputStream = new DataInputStream(new BufferedInputStream(playerSocket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(playerSocket.getOutputStream()));
             dataOutputStream.writeUTF(playerToken);
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,6 +30,8 @@ public class PlayerThread extends Thread{
 
     @Override
     public void run(){
+        //todo: request death on thread (close)
+
         try{
             String input;
             String output;
@@ -69,6 +72,8 @@ public class PlayerThread extends Thread{
                         output = "1";
                     }
                 }
+                dataOutputStream.writeUTF(output);
+                dataOutputStream.flush();
 
 
             }
