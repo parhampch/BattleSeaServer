@@ -59,6 +59,7 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("logout")){
                     Repository.getInstance().removeOnlinePlayer(token);
+                    output = "1";
                 }
                 else if (command.equals("close")){
                     break;
