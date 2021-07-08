@@ -72,6 +72,11 @@ public class PlayerThread extends Thread{
                         output = "1";
                     }
                 }
+                else if (command.equals("attack")){
+                    int x = Integer.parseInt(split[2]);
+                    int y = Integer.parseInt(split[3]);
+                    output = Integer.toString(Repository.getInstance().attackInGame(token, x, y));
+                }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();
 

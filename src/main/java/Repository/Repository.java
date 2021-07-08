@@ -118,4 +118,8 @@ public class Repository {
         gameOfPlayers.put(token2, game);
     }
 
+    public int attackInGame(String token, int x, int y){
+        return gameOfPlayers.get(token).attack(x, y);
+    }
+
 }

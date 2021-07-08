@@ -21,4 +21,16 @@ public class Game {
         }
         return table1.isTarget(x, y);
     }
+
+    public int attack(int x, int y){
+        if (turn == 1){
+            if (table2.isTarget(x, y))
+                return 1;
+        }
+        else {
+            if (table1.isTarget(x, y))
+                return 1;
+        }
+        return 0;
+    }
 }
