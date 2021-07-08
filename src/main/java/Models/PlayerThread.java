@@ -1,6 +1,7 @@
 package Models;
 
 import Repository.Repository;
+import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,8 +21,6 @@ public class PlayerThread extends Thread{
         try {
             dataInputStream = new DataInputStream(new BufferedInputStream(playerSocket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(playerSocket.getOutputStream()));
-            dataOutputStream.writeUTF(playerToken);
-            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,8 +29,6 @@ public class PlayerThread extends Thread{
 
     @Override
     public void run(){
-        //todo: request death on thread (close)
-
         try{
             String input;
             String output;
@@ -53,12 +50,20 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("login")){
                     if (Repository.getInstance().isInfoCorrect(split[2], split[3])){
-                        Repository.getInstance().addOnlinePlayer(token, split[2]);
-                        output = "1 " + generateToken();
+                        String newToken = generateToken();
+                        Repository.getInstance().addOnlinePlayer(newToken, split[2]);
+                        output = "1 " + newToken;
                     }
                     else
                         output = "0";
                 }
+                else if (command.equals("logout")){
+                    Repository.getInstance().removeOnlinePlayer(token);
+                }
+                else if (command.equals("close")){
+                    break;
+                }
+                // todo : make new game process correct
                 else if (command.equals("newGame")){
                     if (!Repository.getInstance().isThereWaitingPlayer()){
                         Repository.getInstance().addWaitingPlayer(token);
@@ -76,6 +81,9 @@ public class PlayerThread extends Thread{
                     int x = Integer.parseInt(split[2]);
                     int y = Integer.parseInt(split[3]);
                     output = Integer.toString(Repository.getInstance().attackInGame(token, x, y));
+                }
+                else if (command.equals("ongoingGames")){
+                    output = new Gson().toJson(Repository.getInstance().getAllGames());
                 }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();

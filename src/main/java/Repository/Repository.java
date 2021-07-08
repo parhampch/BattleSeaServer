@@ -116,10 +116,26 @@ public class Repository {
     public void addGame(String token1, String token2, Game game){
         gameOfPlayers.put(token1, game);
         gameOfPlayers.put(token2, game);
+        games.put(game.getID(), game);
     }
 
     public int attackInGame(String token, int x, int y){
         return gameOfPlayers.get(token).attack(x, y);
+    }
+
+    public ArrayList<String> getAllGames(){
+        ArrayList<String> result = new ArrayList<>();
+        for (Game game : games.values()) {
+            String temp = Integer.toString(game.getID()) + " " +
+                    onlinePlayers.get(game.getPlayer1Token()).getUsername() + " " +
+                    onlinePlayers.get(game.getPlayer2Token()).getUsername();
+            result.add(temp);
+        }
+        return result;
+    }
+
+    public void removeOnlinePlayer(String token){
+        onlinePlayers.remove(token);
     }
 
 }
