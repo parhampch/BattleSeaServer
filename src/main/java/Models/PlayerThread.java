@@ -4,6 +4,8 @@ import Repository.Repository;
 
 import java.io.*;
 import java.net.Socket;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Random;
 
 public class PlayerThread extends Thread{
@@ -12,7 +14,7 @@ public class PlayerThread extends Thread{
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public PlayerThread(Socket playerSocket, String playerToken) {
+    public PlayerThread(Socket playerSocket) {
         this.playerSocket = playerSocket;
         this.playerToken = playerToken;
         try {
@@ -49,7 +51,7 @@ public class PlayerThread extends Thread{
                 else if (command.equals("login")){
                     if (Repository.getInstance().isInfoCorrect(split[2], split[3])){
                         Repository.getInstance().addOnlinePlayer(token, split[2]);
-                        output = "1";
+                        output = "1 " + generateToken();
                     }
                     else
                         output = "0";
@@ -73,5 +75,15 @@ public class PlayerThread extends Thread{
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+
+    private String generateToken() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte bytes[] = new byte[20];
+        secureRandom.nextBytes(bytes);
+        Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        String token = encoder.encodeToString(bytes);
+        return token;
     }
 }
