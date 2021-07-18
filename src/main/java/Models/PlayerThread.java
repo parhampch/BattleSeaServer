@@ -52,6 +52,7 @@ public class PlayerThread extends Thread{
                     if (Repository.getInstance().isInfoCorrect(split[2], split[3])){
                         String newToken = generateToken();
                         Repository.getInstance().addOnlinePlayer(newToken, split[2]);
+                        Repository.getInstance().addPlayerThread(token, this);
                         output = "1 " + newToken;
                     }
                     else
@@ -65,6 +66,7 @@ public class PlayerThread extends Thread{
                     break;
                 }
                 else if (command.equals("newGame")){
+                    System.out.println("fuck you");
                     output = Integer.toString(Repository.getInstance().createNewCGame(token));
                 }
                 else if (command.equals("attack")){
