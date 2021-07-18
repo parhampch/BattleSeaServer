@@ -52,7 +52,7 @@ public class PlayerThread extends Thread{
                     if (Repository.getInstance().isInfoCorrect(split[2], split[3])){
                         String newToken = generateToken();
                         Repository.getInstance().addOnlinePlayer(newToken, split[2]);
-                        Repository.getInstance().addPlayerThread(token, this);
+                        Repository.getInstance().addPlayerThread(newToken, this);
                         output = "1 " + newToken;
                     }
                     else
