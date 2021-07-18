@@ -1,7 +1,5 @@
 package Models;
 
-import javafx.scene.control.Tab;
-
 public class Game {
     private int ID;
     private String  player1Token;
