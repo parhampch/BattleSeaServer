@@ -66,7 +66,6 @@ public class PlayerThread extends Thread{
                     break;
                 }
                 else if (command.equals("newGame")){
-                    System.out.println("fuck you");
                     output = Integer.toString(Repository.getInstance().createNewCGame(token));
                 }
                 else if (command.equals("attack")){

@@ -10,6 +10,7 @@ public class Table {
     }
 
     public int handleAttack(int x, int y){
+        // -1 : ruined part of ship  0 : water  1 : healthy ship  2 : target destroyed :D
         if (map[x][y] == 0)
             return 0;
         int color = map[x][y];
