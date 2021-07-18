@@ -170,6 +170,7 @@ public class Repository {
 
     public String getMap(){
         int num = new Random().nextInt() % 6;
+        num = Math.abs(num);
         //int num = 0;
         return new Gson().toJson(maps[num]);
     }
