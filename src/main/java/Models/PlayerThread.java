@@ -7,7 +7,6 @@ import java.io.*;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.Random;
 
 public class PlayerThread extends Thread{
     private String playerToken;
@@ -85,6 +84,13 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("nextMap")){
                     output = Repository.getInstance().getMap();
+                }
+                else if (command.equals("startGame")){
+                    if (Repository.getInstance().checkStartGame(token)){
+                        output = "1 " + Repository.getInstance().startGame(token);
+                    }
+                    else
+                        output = "0";
                 }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();

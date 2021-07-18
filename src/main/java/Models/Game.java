@@ -14,12 +14,17 @@ public class Game {
     private Table table1;
     private Table table2;
     private ArrayList<String> events;
+    private boolean player1IsReady;
+    private boolean player2IsReady;
 
     public Game(String player1Token, String player2Token){
         events = new ArrayList<>();
         this.player1Token = player1Token;
         this.player2Token = player2Token;
         this.ID = counter;
+        this.turn = 1;
+        this.player1IsReady = false;
+        this.player2IsReady = false;
         counter++;
     }
 
@@ -69,5 +74,35 @@ public class Game {
 
     public void nextTurn(){
         turn = (turn == 1) ? 2 : 1;
+    }
+
+    public boolean checkStart(String token){
+        if (token.equals(player1Token))
+            player1IsReady = true;
+        else
+            player2IsReady = true;
+        return player1IsReady && player2IsReady;
+    }
+
+    public String getStartInfo(String token){
+        String info1 = Repository.getInstance().getPlayerUsername(player2Token) + " T";
+        String info2 = Repository.getInstance().getPlayerUsername(player1Token) + " F";
+
+        if (token.equals(player1Token)){
+            try {
+                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().writeUTF(info2);
+                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return info1;
+        }
+        try {
+            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().writeUTF(info1);
+            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return info2;
     }
 }

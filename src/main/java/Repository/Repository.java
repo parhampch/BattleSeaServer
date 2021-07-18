@@ -138,8 +138,12 @@ public class Repository {
         }
         String player2Token = waitingPlayer.getFirst();
         waitingPlayer.pop();
-        Game game = new Game(player2Token, token);
-
+        int num = new Random().nextInt() % 2;
+        Game game;
+        if (num == 0)
+            game = new Game(player2Token, token);
+        else
+            game = new Game(token, player2Token);
         games.put(game.getID(), game);
         gameOfPlayers.put(token, game);
         gameOfPlayers.put(player2Token, game);
@@ -168,5 +172,17 @@ public class Repository {
         //int num = new Random().nextInt() % 10;
         int num = 0;
         return new Gson().toJson(maps[num]);
+    }
+
+    public boolean checkStartGame(String token){
+        return gameOfPlayers.get(token).checkStart(token);
+    }
+
+    public String startGame(String token){
+        return gameOfPlayers.get(token).getStartInfo(token);
+    }
+
+    public String getPlayerUsername(String token){
+        return onlinePlayers.get(token).getUsername();
     }
 }
