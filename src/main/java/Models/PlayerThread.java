@@ -70,7 +70,10 @@ public class PlayerThread extends Thread{
                 else if (command.equals("attack")){
                     int x = Integer.parseInt(split[2]);
                     int y = Integer.parseInt(split[3]);
-                    output = Integer.toString(Repository.getInstance().attackInGame(token, x, y));
+                    int result = Repository.getInstance().attackInGame(token, x, y);
+                    String massage = Integer.toString(result) + " ";
+                    //todo : water cells around ship
+                    output = massage;
                 }
                 else if (command.equals("ongoingGames")){
                     output = new Gson().toJson(Repository.getInstance().getAllGames());

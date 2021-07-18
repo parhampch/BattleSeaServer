@@ -1,7 +1,8 @@
 package Models;
 
-import javafx.scene.control.Tab;
+import Repository.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -34,25 +35,36 @@ public class Game {
         return player2Token;
     }
 
-    public boolean isTarget(int x, int y){
-        if (turn == 1){
-            return table2.isTarget(x, y);
-        }
-        return table1.isTarget(x, y);
-    }
-
     public int attack(int x, int y){
+        int result;
+        String enemyToken = "";
         if (turn == 1){
-            turn = 2;
-            if (table2.isTarget(x, y))
-                return 1;
+            result = table2.handleAttack(x, y);
+            enemyToken = player2Token;
         }
         else {
-            turn = 1;
-            if (table1.isTarget(x, y))
-                return 1;
+            result = table1.handleAttack(x, y);
+            enemyToken = player1Token;
         }
-        return 0;
+        if (result == 0){
+            try {
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF("0");
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.nextTurn();
+        }
+        else {
+            String massage = Integer.toString(result) + " " + Integer.toString(x) + " " + Integer.toString(y);
+            try {
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF(massage);
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     public void nextTurn(){

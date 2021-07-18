@@ -120,7 +120,7 @@ public class Repository {
         onlinePlayers.remove(token);
     }
 
-    public int createNewCGame(String token){
+    public synchronized int createNewCGame(String token){
         if (waitingPlayer.isEmpty()){
             waitingPlayer.add(token);
             return 0;
@@ -134,6 +134,7 @@ public class Repository {
         gameOfPlayers.put(player2Token, game);
         try {
             playersThreads.get(player2Token).getDataOutputStream().writeUTF(Integer.toString(game.getID()));
+            playersThreads.get(player2Token).getDataOutputStream().flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,6 +143,10 @@ public class Repository {
 
     public void nextTurnOfAGame(String token){
         gameOfPlayers.get(token).nextTurn();
+    }
+
+    public PlayerThread getPlayerThread(String token){
+        return playersThreads.get(token);
     }
 
 }

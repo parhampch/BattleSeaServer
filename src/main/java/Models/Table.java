@@ -9,7 +9,45 @@ public class Table {
         this.map = map;
     }
 
-    public boolean isTarget(int x, int y){
-        return true;
+    public int handleAttack(int x, int y){
+        if (map[x][y] == 0)
+            return 0;
+        map[x][y] = -1;
+        int temp = x;
+        while (temp > -1){
+            if (map[temp][y] == 1)
+                return 1;
+            if (map[temp][y] == 0)
+                break;
+            temp--;
+        }
+        temp = x;
+        while (temp < 10){
+            if (map[temp][y] == 1)
+                return 1;
+            if (map[temp][y] == 0)
+                break;
+            temp++;
+        }
+        temp = y;
+        while (temp > -1){
+            if (map[x][temp] == 1)
+                return 1;
+            if (map[x][temp] == 0)
+                break;
+            temp--;
+        }
+        temp = y;
+        while (temp < 10){
+            if (map[x][temp] == 1)
+                return 1;
+            if (map[x][temp] == 0)
+                break;
+            temp++;
+        }
+        remainShips--;
+        if (remainShips > 0)
+            return 2;
+        return 3;
     }
 }
