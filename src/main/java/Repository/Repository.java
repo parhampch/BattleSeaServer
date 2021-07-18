@@ -97,28 +97,8 @@ public class Repository {
         }
     }
 
-    public boolean isThereWaitingPlayer(){
-        return !waitingPlayer.isEmpty();
-    }
-
-    public void addWaitingPlayer(String token){
-        waitingPlayer.addLast(token);
-    }
-
-    public String getWaitingPlayer(){
-        String token = waitingPlayer.getFirst();
-        waitingPlayer.removeFirst();
-        return token;
-    }
-
     public void addOnlinePlayer(String token, String username){
         onlinePlayers.put(token, getPlayer(username));
-    }
-
-    public void addGame(String token1, String token2, Game game){
-        gameOfPlayers.put(token1, game);
-        gameOfPlayers.put(token2, game);
-        games.put(game.getID(), game);
     }
 
     public int attackInGame(String token, int x, int y){
@@ -158,6 +138,10 @@ public class Repository {
             e.printStackTrace();
         }
         return game.getID();
+    }
+
+    public void nextTurnOfAGame(String token){
+        gameOfPlayers.get(token).nextTurn();
     }
 
 }

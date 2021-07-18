@@ -64,7 +64,6 @@ public class PlayerThread extends Thread{
                 else if (command.equals("close")){
                     break;
                 }
-                // todo : make new game process correct
                 else if (command.equals("newGame")){
                     output = Integer.toString(Repository.getInstance().createNewCGame(token));
                 }
@@ -75,6 +74,10 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("ongoingGames")){
                     output = new Gson().toJson(Repository.getInstance().getAllGames());
+                }
+                else if (command.equals("nextTurn")){
+                    Repository.getInstance().nextTurnOfAGame(token);
+                    output = "1";
                 }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();

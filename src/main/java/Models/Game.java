@@ -2,17 +2,24 @@ package Models;
 
 import javafx.scene.control.Tab;
 
+import java.util.ArrayList;
+
 public class Game {
+    private static int counter = 1;
     private int ID;
     private String  player1Token;
     private String player2Token;
     private int turn;
     private Table table1;
     private Table table2;
+    private ArrayList<String> events;
 
     public Game(String player1Token, String player2Token){
+        events = new ArrayList<>();
         this.player1Token = player1Token;
         this.player2Token = player2Token;
+        this.ID = counter;
+        counter++;
     }
 
     public int getID() {
@@ -46,5 +53,9 @@ public class Game {
                 return 1;
         }
         return 0;
+    }
+
+    public void nextTurn(){
+        turn = (turn == 1) ? 2 : 1;
     }
 }
