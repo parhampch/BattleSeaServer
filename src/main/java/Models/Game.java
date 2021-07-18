@@ -10,10 +10,9 @@ public class Game {
     private Table table1;
     private Table table2;
 
-    public Game(String player1Token, String player2Token, int turn){
+    public Game(String player1Token, String player2Token){
         this.player1Token = player1Token;
         this.player2Token = player2Token;
-        this.turn = turn;
     }
 
     public int getID() {

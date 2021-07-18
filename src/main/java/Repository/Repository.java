@@ -4,18 +4,20 @@ import java.util.ArrayList;
 
 import Models.Game;
 import Models.Player;
+import Models.PlayerThread;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Repository {
     public ArrayList<Player> allPlayers;
     private static Repository instance;
-    private HashMap<String, Thread> playersThreads;
+    private HashMap<String, PlayerThread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
     private HashMap<Integer, Game> games;
     private ArrayDeque<String> waitingPlayer;
@@ -136,6 +138,26 @@ public class Repository {
 
     public void removeOnlinePlayer(String token){
         onlinePlayers.remove(token);
+    }
+
+    public int createNewCGame(String token){
+        if (waitingPlayer.isEmpty()){
+            waitingPlayer.add(token);
+            return 0;
+        }
+        String player2Token = waitingPlayer.getFirst();
+        waitingPlayer.pop();
+        Game game = new Game(player2Token, token);
+
+        games.put(game.getID(), game);
+        gameOfPlayers.put(token, game);
+        gameOfPlayers.put(player2Token, game);
+        try {
+            playersThreads.get(player2Token).getDataOutputStream().writeUTF(Integer.toString(game.getID()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return game.getID();
     }
 
 }

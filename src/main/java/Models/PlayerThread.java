@@ -66,17 +66,7 @@ public class PlayerThread extends Thread{
                 }
                 // todo : make new game process correct
                 else if (command.equals("newGame")){
-                    if (!Repository.getInstance().isThereWaitingPlayer()){
-                        Repository.getInstance().addWaitingPlayer(token);
-                        output = "0";
-                    }
-                    else {
-                        int turn = new Random().nextInt() % 2;
-                        String secondToken = Repository.getInstance().getWaitingPlayer();
-                        Game game = new Game(token, secondToken, turn);
-                        Repository.getInstance().addGame(token, secondToken, game);
-                        output = "1";
-                    }
+                    output = Integer.toString(Repository.getInstance().createNewCGame(token));
                 }
                 else if (command.equals("attack")){
                     int x = Integer.parseInt(split[2]);
@@ -104,5 +94,9 @@ public class PlayerThread extends Thread{
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String token = encoder.encodeToString(bytes);
         return token;
+    }
+
+    public DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
     }
 }
