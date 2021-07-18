@@ -22,6 +22,7 @@ public class Repository {
     private HashMap<Integer, Game> games;
     private ArrayDeque<String> waitingPlayer;
     private HashMap<String, Game> gameOfPlayers;
+    public int [][][] maps;
 
     private Repository(){
         this.allPlayers = new ArrayList<>();
@@ -49,6 +50,16 @@ public class Repository {
         }
         Type type = new TypeToken<ArrayList<Player>>(){}.getType();
         allPlayers = gson.fromJson(br, type);
+
+        file = new File("src\\main\\resources\\Maps.json");
+        br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        type = new TypeToken<int[][][]>(){}.getType();
+        maps = gson.fromJson(br, type);
     }
 
     public boolean isUsernameValid(String username){
@@ -153,4 +164,9 @@ public class Repository {
         playersThreads.put(token, playerThread);
     }
 
+    public String getMap(){
+        //int num = new Random().nextInt() % 10;
+        int num = 0;
+        return new Gson().toJson(maps[num]);
+    }
 }

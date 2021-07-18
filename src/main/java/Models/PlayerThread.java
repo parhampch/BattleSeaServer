@@ -84,6 +84,9 @@ public class PlayerThread extends Thread{
                     Repository.getInstance().nextTurnOfAGame(token);
                     output = "1";
                 }
+                else if (command.equals("nextMap")){
+                    output = Repository.getInstance().getMap();
+                }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();
 
