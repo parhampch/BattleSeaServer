@@ -64,27 +64,23 @@ public class PlayerThread extends Thread{
                 else if (command.equals("close")){
                     break;
                 }
-                // todo : make new game process correct
                 else if (command.equals("newGame")){
-                    if (!Repository.getInstance().isThereWaitingPlayer()){
-                        Repository.getInstance().addWaitingPlayer(token);
-                        output = "0";
-                    }
-                    else {
-                        int turn = new Random().nextInt() % 2;
-                        String secondToken = Repository.getInstance().getWaitingPlayer();
-                        Game game = new Game(token, secondToken, turn);
-                        Repository.getInstance().addGame(token, secondToken, game);
-                        output = "1";
-                    }
+                    output = Integer.toString(Repository.getInstance().createNewCGame(token));
                 }
                 else if (command.equals("attack")){
                     int x = Integer.parseInt(split[2]);
                     int y = Integer.parseInt(split[3]);
-                    output = Integer.toString(Repository.getInstance().attackInGame(token, x, y));
+                    int result = Repository.getInstance().attackInGame(token, x, y);
+                    String massage = Integer.toString(result) + " ";
+                    //todo : water cells around ship
+                    output = massage;
                 }
                 else if (command.equals("ongoingGames")){
                     output = new Gson().toJson(Repository.getInstance().getAllGames());
+                }
+                else if (command.equals("nextTurn")){
+                    Repository.getInstance().nextTurnOfAGame(token);
+                    output = "1";
                 }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();
@@ -104,5 +100,9 @@ public class PlayerThread extends Thread{
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String token = encoder.encodeToString(bytes);
         return token;
+    }
+
+    public DataOutputStream getDataOutputStream() {
+        return dataOutputStream;
     }
 }

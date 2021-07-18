@@ -1,17 +1,26 @@
 package Models;
 
+import Repository.Repository;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Game {
+    private static int counter = 1;
     private int ID;
     private String  player1Token;
     private String player2Token;
     private int turn;
     private Table table1;
     private Table table2;
+    private ArrayList<String> events;
 
-    public Game(String player1Token, String player2Token, int turn){
+    public Game(String player1Token, String player2Token){
+        events = new ArrayList<>();
         this.player1Token = player1Token;
         this.player2Token = player2Token;
-        this.turn = turn;
+        this.ID = counter;
+        counter++;
     }
 
     public int getID() {
@@ -26,24 +35,39 @@ public class Game {
         return player2Token;
     }
 
-    public boolean isTarget(int x, int y){
-        if (turn == 1){
-            return table2.isTarget(x, y);
-        }
-        return table1.isTarget(x, y);
-    }
-
     public int attack(int x, int y){
+        int result;
+        String enemyToken = "";
         if (turn == 1){
-            turn = 2;
-            if (table2.isTarget(x, y))
-                return 1;
+            result = table2.handleAttack(x, y);
+            enemyToken = player2Token;
         }
         else {
-            turn = 1;
-            if (table1.isTarget(x, y))
-                return 1;
+            result = table1.handleAttack(x, y);
+            enemyToken = player1Token;
         }
-        return 0;
+        if (result == 0){
+            try {
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF("0");
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.nextTurn();
+        }
+        else {
+            String massage = Integer.toString(result) + " " + Integer.toString(x) + " " + Integer.toString(y);
+            try {
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF(massage);
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public void nextTurn(){
+        turn = (turn == 1) ? 2 : 1;
     }
 }

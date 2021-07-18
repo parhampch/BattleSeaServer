@@ -4,18 +4,20 @@ import java.util.ArrayList;
 
 import Models.Game;
 import Models.Player;
+import Models.PlayerThread;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Repository {
     public ArrayList<Player> allPlayers;
     private static Repository instance;
-    private HashMap<String, Thread> playersThreads;
+    private HashMap<String, PlayerThread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
     private HashMap<Integer, Game> games;
     private ArrayDeque<String> waitingPlayer;
@@ -95,28 +97,8 @@ public class Repository {
         }
     }
 
-    public boolean isThereWaitingPlayer(){
-        return !waitingPlayer.isEmpty();
-    }
-
-    public void addWaitingPlayer(String token){
-        waitingPlayer.addLast(token);
-    }
-
-    public String getWaitingPlayer(){
-        String token = waitingPlayer.getFirst();
-        waitingPlayer.removeFirst();
-        return token;
-    }
-
     public void addOnlinePlayer(String token, String username){
         onlinePlayers.put(token, getPlayer(username));
-    }
-
-    public void addGame(String token1, String token2, Game game){
-        gameOfPlayers.put(token1, game);
-        gameOfPlayers.put(token2, game);
-        games.put(game.getID(), game);
     }
 
     public int attackInGame(String token, int x, int y){
@@ -136,6 +118,35 @@ public class Repository {
 
     public void removeOnlinePlayer(String token){
         onlinePlayers.remove(token);
+    }
+
+    public synchronized int createNewCGame(String token){
+        if (waitingPlayer.isEmpty()){
+            waitingPlayer.add(token);
+            return 0;
+        }
+        String player2Token = waitingPlayer.getFirst();
+        waitingPlayer.pop();
+        Game game = new Game(player2Token, token);
+
+        games.put(game.getID(), game);
+        gameOfPlayers.put(token, game);
+        gameOfPlayers.put(player2Token, game);
+        try {
+            playersThreads.get(player2Token).getDataOutputStream().writeUTF(Integer.toString(game.getID()));
+            playersThreads.get(player2Token).getDataOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return game.getID();
+    }
+
+    public void nextTurnOfAGame(String token){
+        gameOfPlayers.get(token).nextTurn();
+    }
+
+    public PlayerThread getPlayerThread(String token){
+        return playersThreads.get(token);
     }
 
 }
