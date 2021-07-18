@@ -169,8 +169,8 @@ public class Repository {
     }
 
     public String getMap(){
-        //int num = new Random().nextInt() % 10;
-        int num = 0;
+        int num = new Random().nextInt() % 6;
+        //int num = 0;
         return new Gson().toJson(maps[num]);
     }
 
