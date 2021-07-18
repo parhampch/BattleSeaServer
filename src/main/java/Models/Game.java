@@ -90,7 +90,7 @@ public class Game {
 
         if (token.equals(player1Token)){
             try {
-                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().writeUTF(info2);
+                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().writeUTF("1 " + info2);
                 Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -98,7 +98,7 @@ public class Game {
             return info1;
         }
         try {
-            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().writeUTF(info1);
+            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().writeUTF("1 " + info1);
             Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().flush();
         } catch (IOException e) {
             e.printStackTrace();
