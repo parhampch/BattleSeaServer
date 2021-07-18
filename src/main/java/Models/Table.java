@@ -12,10 +12,11 @@ public class Table {
     public int handleAttack(int x, int y){
         if (map[x][y] == 0)
             return 0;
+        int color = map[x][y];
         map[x][y] = -1;
         int temp = x;
         while (temp > -1){
-            if (map[temp][y] == 1)
+            if (map[temp][y] == color)
                 return 1;
             if (map[temp][y] == 0)
                 break;
@@ -23,7 +24,7 @@ public class Table {
         }
         temp = x;
         while (temp < 10){
-            if (map[temp][y] == 1)
+            if (map[temp][y] == color)
                 return 1;
             if (map[temp][y] == 0)
                 break;
@@ -31,7 +32,7 @@ public class Table {
         }
         temp = y;
         while (temp > -1){
-            if (map[x][temp] == 1)
+            if (map[x][temp] == color)
                 return 1;
             if (map[x][temp] == 0)
                 break;
@@ -39,7 +40,7 @@ public class Table {
         }
         temp = y;
         while (temp < 10){
-            if (map[x][temp] == 1)
+            if (map[x][temp] == color)
                 return 1;
             if (map[x][temp] == 0)
                 break;
