@@ -149,4 +149,8 @@ public class Repository {
         return playersThreads.get(token);
     }
 
+    public void addPlayerThread(String token, PlayerThread playerThread){
+        playersThreads.put(token, playerThread);
+    }
+
 }
