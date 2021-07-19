@@ -219,8 +219,10 @@ public class Repository {
 
     public void playerWin(String token){
         onlinePlayers.get(token).win();
+        saveData();
     }
     public void playerLose(String token){
         onlinePlayers.get(token).lose();
+        saveData();
     }
 }
