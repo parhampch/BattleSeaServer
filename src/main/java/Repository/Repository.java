@@ -211,4 +211,9 @@ public class Repository {
         Collections.sort(allPlayers);
         return allPlayers;
     }
+
+    public String getInfo(String token){
+        Player player = onlinePlayers.get(token);
+        return player.getUsername() + " " + Integer.toString(player.getWinNumber()) + " " + Integer.toString(player.getLoseNumber()) + " " + Integer.toString(player.getScore());
+    }
 }
