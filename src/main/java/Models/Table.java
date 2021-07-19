@@ -11,7 +11,11 @@ public class Table {
     }
 
     public void setMap(int[][] map) {
-        this.map = map;
+        this.map = new int[10][10];
+        for (int i = 0; i < 10; i++){
+            for (int j = 0; j < 10; j++)
+                this.map[i][j] = map[i][j];
+        }
     }
 
     public int handleAttack(int x, int y){
