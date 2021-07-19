@@ -1,6 +1,7 @@
 package Models;
 
 import Repository.Repository;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +56,8 @@ public class Game {
         }
         if (result == 0){
             try {
-                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF("0");
+                String massage = "T " + Integer.toString(result + 1) + " " +  Integer.toString(x) + " " +  Integer.toString(y);
+                Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF(massage);
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -63,7 +65,9 @@ public class Game {
             this.nextTurn();
         }
         else {
-            String massage = Integer.toString(result) + " " + Integer.toString(x) + " " + Integer.toString(y);
+            String massage = "F " + Integer.toString(result + 1) + " " +  Integer.toString(x) + " " +  Integer.toString(y);
+            if (result > 1)
+                massage += " " + new Gson().toJson(getWatersAroundShip(x, y));
             try {
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF(massage);
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();

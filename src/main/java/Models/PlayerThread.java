@@ -72,6 +72,7 @@ public class PlayerThread extends Thread{
                     int y = Integer.parseInt(split[3]);
                     int result = Repository.getInstance().attackInGame(token, x, y);
                     String massage = Integer.toString(result) + " " + Integer.toString(x) + " " + Integer.toString(y) + " ";
+
                     if (Repository.getInstance().isPlayersTurn(token))
                         massage += "T";
                     else
