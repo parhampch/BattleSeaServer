@@ -46,12 +46,15 @@ public class Game {
     public int attack(int x, int y){
         int result;
         String enemyToken = "";
+        String myToken = "";
         if (turn == 1){
             result = table2.handleAttack(x, y);
+            myToken = player1Token;
             enemyToken = player2Token;
         }
         else {
             result = table1.handleAttack(x, y);
+            myToken = player2Token;
             enemyToken = player1Token;
         }
         if (result == 0){
@@ -73,6 +76,10 @@ public class Game {
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            if (result == 3){
+                Repository.getInstance().playerWin(myToken);
+                Repository.getInstance().playerLose(enemyToken);
             }
         }
         return result;
