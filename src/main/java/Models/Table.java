@@ -6,9 +6,8 @@ public class Table {
     private int remainShips;
     private int [][] map;
 
-    public Table(int[][] map) {
+    public Table() {
         this.remainShips = 9;
-        this.map = map;
     }
 
     public void setMap(int[][] map) {

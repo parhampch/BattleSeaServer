@@ -25,6 +25,8 @@ public class Game {
         this.turn = 1;
         this.player1IsReady = false;
         this.player2IsReady = false;
+        this.table1 = new Table();
+        this.table2 = new Table();
         counter++;
     }
 
