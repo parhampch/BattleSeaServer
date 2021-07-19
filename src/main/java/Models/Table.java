@@ -127,7 +127,7 @@ public class Table {
             waters.add(tempY);
         }
         tempX = x - 1;
-        while (map[tempX][yPrime] == -1){
+        while (tempX > -1 && map[tempX][yPrime] == -1){
             waters.add(tempX);
             waters.add(tempY);
             tempY--;
