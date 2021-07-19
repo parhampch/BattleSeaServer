@@ -60,14 +60,77 @@ public class Table {
 
     public ArrayList<Integer> getWaterAroundShip(int x, int y){
         ArrayList<Integer> waters = new ArrayList<>();
-        if (x == 0){
+        if (x > 0){
+            int tempX = x;
+            while (tempX > -1 && map[tempX][y] == -1)
+                tempX--;
+            if (tempX > -1)
+                waters.addAll(horizontalWater(tempX, y, true));
+        }
+        if (x < 9){
+            int tempX = x;
+            while (tempX > -1 && map[tempX][y] == -1)
+                tempX++;
+            if (tempX < 10)
+                waters.addAll(horizontalWater(tempX, y, false));
+        }
+        if (y > 0){
             int tempY = y;
-            while (tempY < 10 && map[x][y] == -1)
-                tempY++;
-            if (tempY == 10){
+            while (tempY > -1 && map[x][tempY] == -1)
                 tempY--;
+            if (tempY > -1)
+                waters.addAll(verticalWater(x, tempY, false));
+        }
+        if (y < 10){
+            int tempY = y;
+            while (tempY > -1 && map[x][tempY] == -1)
+                tempY++;
+            if (tempY < 10)
+                waters.addAll(verticalWater(x, tempY, true));
+        }
+        return waters;
+    }
 
-            }
+    private ArrayList<Integer> horizontalWater(int tempX, int y, boolean isUp){
+        ArrayList<Integer> waters = new ArrayList<>();
+        int tempY = y;
+        int xPrime = isUp ? tempX + 1 : tempX - 1;
+        while (tempY < 10 && map[xPrime][tempY] == -1){
+            waters.add(tempX);
+            waters.add(tempY);
+            tempY++;
+        }
+        tempY = y - 1;
+        while (tempY > -1 && map[xPrime][tempY] == -1){
+            waters.add(tempX);
+            waters.add(tempY);
+            tempY--;
+        }
+        return waters;
+    }
+
+    private ArrayList<Integer> verticalWater(int x, int tempY, boolean isRight){
+        ArrayList<Integer> waters = new ArrayList<>();
+        int tempX = x;
+        int yPrime = isRight ? tempY - 1 : tempY + 1;
+        while (tempX < 10 && map[tempX][yPrime] == -1){
+            waters.add(tempX);
+            waters.add(tempY);
+            tempX++;
+        }
+        if (tempX < 10) {
+            waters.add(tempX);
+            waters.add(tempY);
+        }
+        tempX = x - 1;
+        while (map[tempX][yPrime] == -1){
+            waters.add(tempX);
+            waters.add(tempY);
+            tempY--;
+        }
+        if (tempX > -1) {
+            waters.add(tempX);
+            waters.add(tempY);
         }
         return waters;
     }
