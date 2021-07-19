@@ -102,6 +102,12 @@ public class PlayerThread extends Thread{
                     else
                         output = "0";
                 }
+                else if (command.equals("getScoreBoard")){
+                    output = new Gson().toJson(Repository.getInstance().getScoreBoard());
+                }
+                else if (command.equals("getInfo")){
+                    output = Repository.getInstance().getInfo(token);
+                }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();
 

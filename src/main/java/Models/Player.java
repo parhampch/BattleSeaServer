@@ -1,14 +1,14 @@
 package Models;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private String username;
     private String password;
-    private long score;
+    private int winNumber;
+    private int loseNumber;
 
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
-        this.score = 0;
     }
 
     public String getUsername() {
@@ -23,16 +23,42 @@ public class Player {
         return password;
     }
 
+    public int getWinNumber() {
+        return winNumber;
+    }
+
+    public int getLoseNumber() {
+        return loseNumber;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public long getScore() {
-        return score;
+    public void win(){
+        winNumber++;
     }
 
-    public void setScore(long score) {
-        this.score = score;
+    public void lose(){
+        loseNumber++;
+    }
+
+    public int getScore(){
+        return winNumber - loseNumber;
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        if (this.getScore() > player.getScore())
+            return -1;
+        if (this.getScore() < player.getScore())
+            return 1;
+        return this.username.compareTo(player.username);
+    }
+
+    @Override
+    public String toString() {
+        return "Username : " + this.username + " Score : " + this.getUsername();
     }
 }
 
