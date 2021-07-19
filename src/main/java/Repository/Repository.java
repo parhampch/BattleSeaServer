@@ -168,9 +168,10 @@ public class Repository {
         playersThreads.put(token, playerThread);
     }
 
-    public String getMap(){
+    public String getMap(String token){
         int num = new Random().nextInt() % 6;
         num = Math.abs(num);
+        gameOfPlayers.get(token).setMap(token, maps[num]);
         //int num = 0;
         return new Gson().toJson(maps[num]);
     }

@@ -88,7 +88,7 @@ public class PlayerThread extends Thread{
                     output = "1";
                 }
                 else if (command.equals("nextMap")){
-                    output = Repository.getInstance().getMap();
+                    output = Repository.getInstance().getMap(token);
                 }
                 else if (command.equals("startGame")){
                     if (Repository.getInstance().checkStartGame(token)){

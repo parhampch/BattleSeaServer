@@ -122,4 +122,12 @@ public class Game {
             return table2.getWaterAroundShip(x, y);
         return table1.getWaterAroundShip(x, y);
     }
+
+    public void setMap(String token, int[][] map){
+        if (token.equals(player1Token))
+            table1.setMap(map);
+        else
+            table2.setMap(map);
+    }
+
 }
