@@ -216,4 +216,13 @@ public class Repository {
         Player player = onlinePlayers.get(token);
         return player.getUsername() + " " + Integer.toString(player.getWinNumber()) + " " + Integer.toString(player.getLoseNumber()) + " " + Integer.toString(player.getScore());
     }
+
+    public void playerWin(String token){
+        onlinePlayers.get(token).win();
+        saveData();
+    }
+    public void playerLose(String token){
+        onlinePlayers.get(token).lose();
+        saveData();
+    }
 }
