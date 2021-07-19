@@ -78,7 +78,7 @@ public class PlayerThread extends Thread{
                     else
                         massage += "F";
                     if (result > 1)
-                        massage += new Gson().toJson(Repository.getInstance().getWaterAroundShip(token, x, y));
+                        massage += " " + new Gson().toJson(Repository.getInstance().getWaterAroundShip(token, x, y));
                     output = massage;
                 }
                 else if (command.equals("ongoingGames")){
