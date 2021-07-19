@@ -1,6 +1,6 @@
 package Models;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private String username;
     private String password;
     private long score;
@@ -33,6 +33,20 @@ public class Player {
 
     public void setScore(long score) {
         this.score = score;
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        if (this.score > player.score)
+            return -1;
+        if (this.score < player.score)
+            return 1;
+        return this.username.compareTo(player.username);
+    }
+
+    @Override
+    public String toString() {
+        return "Username : " + this.username + " Score : " + this.score;
     }
 }
 

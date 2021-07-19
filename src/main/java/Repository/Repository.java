@@ -1,6 +1,5 @@
 package Repository;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.*;
 
 import Models.Game;
 import Models.Player;
@@ -10,12 +9,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Random;
 
 
 public class Repository {
-    public ArrayList<Player> allPlayers;
+    private ArrayList<Player> allPlayers;
     private static Repository instance;
     private HashMap<String, PlayerThread> playersThreads;
     private HashMap<String, Player> onlinePlayers;
@@ -208,5 +205,10 @@ public class Repository {
         gameOfPlayers.remove(token1);
         gameOfPlayers.remove(token2);
         games.remove(ID);
+    }
+
+    public ArrayList<Player> getScoreBoard(){
+        Collections.sort(allPlayers);
+        return allPlayers;
     }
 }
