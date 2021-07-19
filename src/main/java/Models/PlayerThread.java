@@ -59,6 +59,7 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("logout")){
                     Repository.getInstance().removeOnlinePlayer(token);
+                    Repository.getInstance().removePlayerThread(token);
                     output = "1";
                 }
                 else if (command.equals("close")){
@@ -80,6 +81,9 @@ public class PlayerThread extends Thread{
                     if (result > 1)
                         massage += " " + new Gson().toJson(Repository.getInstance().getWaterAroundShip(token, x, y));
                     output = massage;
+                    if (result == 3)
+                        Repository.getInstance().destroyGame(token);
+
                 }
                 else if (command.equals("ongoingGames")){
                     output = new Gson().toJson(Repository.getInstance().getAllGames());
