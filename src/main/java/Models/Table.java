@@ -130,7 +130,7 @@ public class Table {
         while (tempX > -1 && map[tempX][yPrime] == -1){
             waters.add(tempX);
             waters.add(tempY);
-            tempY--;
+            tempX--;
         }
         if (tempX > -1) {
             waters.add(tempX);
