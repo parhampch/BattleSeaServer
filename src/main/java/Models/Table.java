@@ -7,7 +7,7 @@ public class Table {
     private int [][] map;
 
     public Table() {
-        this.remainShips = 9;
+        this.remainShips = 10;
     }
 
     public void setMap(int[][] map) {
