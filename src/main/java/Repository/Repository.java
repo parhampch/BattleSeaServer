@@ -186,4 +186,12 @@ public class Repository {
     public String getPlayerUsername(String token){
         return onlinePlayers.get(token).getUsername();
     }
+
+    public boolean isPlayersTurn(String token){
+        return gameOfPlayers.get(token).isMyTurn(token);
+    }
+
+    public ArrayList<Integer> getWaterAroundShip(String token, int x, int y){
+        return gameOfPlayers.get(token).getWatersAroundShip(x, y);
+    }
 }

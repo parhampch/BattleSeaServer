@@ -105,4 +105,21 @@ public class Game {
         }
         return info2;
     }
+
+    public boolean isMyTurn(String token){
+        if (token.equals(player1Token)){
+            if (turn == 1)
+                return true;
+            return false;
+        }
+        if (turn == 2)
+            return true;
+        return false;
+    }
+
+    public ArrayList<Integer> getWatersAroundShip(int x, int y){
+        if (turn == 1)
+            return table2.getWaterAroundShip(x, y);
+        return table1.getWaterAroundShip(x, y);
+    }
 }

@@ -1,11 +1,17 @@
 package Models;
 
+import java.util.ArrayList;
+
 public class Table {
     private int remainShips;
-    int [][] map;
+    private int [][] map;
 
     public Table(int[][] map) {
         this.remainShips = 9;
+        this.map = map;
+    }
+
+    public void setMap(int[][] map) {
         this.map = map;
     }
 
@@ -51,5 +57,19 @@ public class Table {
         if (remainShips > 0)
             return 2;
         return 3;
+    }
+
+    public ArrayList<Integer> getWaterAroundShip(int x, int y){
+        ArrayList<Integer> waters = new ArrayList<>();
+        if (x == 0){
+            int tempY = y;
+            while (tempY < 10 && map[x][y] == -1)
+                tempY++;
+            if (tempY == 10){
+                tempY--;
+
+            }
+        }
+        return waters;
     }
 }
