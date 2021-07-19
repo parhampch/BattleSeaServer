@@ -136,4 +136,22 @@ public class Game {
             table2.setMap(map);
     }
 
+    public void infoTimeOut(String token){
+        if (token.equals(player1Token)){
+            try {
+                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().writeUTF("T 0");
+                Repository.getInstance().getPlayerThread(player2Token).getDataOutputStream().flush();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().writeUTF("T 0");
+            Repository.getInstance().getPlayerThread(player1Token).getDataOutputStream().flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

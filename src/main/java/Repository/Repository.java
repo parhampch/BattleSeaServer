@@ -158,6 +158,7 @@ public class Repository {
 
     public void nextTurnOfAGame(String token){
         gameOfPlayers.get(token).nextTurn();
+        gameOfPlayers.get(token).infoTimeOut(token);
     }
 
     public PlayerThread getPlayerThread(String token){
