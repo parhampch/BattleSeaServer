@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Objects;
+
 public class Player implements Comparable<Player> {
     private String username;
     private String password;
@@ -60,5 +62,14 @@ public class Player implements Comparable<Player> {
     public String toString() {
         return "Username : " + this.username + " Score : " + this.getUsername();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(username, player.username);
+    }
+
 }
 

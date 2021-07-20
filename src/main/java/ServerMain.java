@@ -12,7 +12,8 @@ import java.util.Collections;
 
 public class ServerMain {
     public static void main(String[] args) {
-        Repository.getInstance().initialize();
-        Server.getInstance().run();
+        System.out.println("player" + 1);
+        //Repository.getInstance().initialize();
+        //Server.getInstance().run();
     }
 }
