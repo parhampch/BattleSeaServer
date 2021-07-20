@@ -207,9 +207,16 @@ public class Repository {
         games.remove(ID);
     }
 
-    public ArrayList<Player> getScoreBoard(){
+    public ArrayList<String> getScoreBoard(){
+        ArrayList<String> allPlayersString = new ArrayList<>();
         Collections.sort(allPlayers);
-        return allPlayers;
+        for (Player player : allPlayers) {
+            String temp = player.getUsername() + " " + player.getScore() + " " ;
+            String isOnline = onlinePlayers.containsValue(player) ? "On" : "Off";
+            temp += isOnline;
+            allPlayersString.add(temp);
+        }
+        return allPlayersString;
     }
 
     public String getInfo(String token){
