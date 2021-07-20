@@ -20,6 +20,7 @@ public class Game {
     private ArrayList<String> events;
     private boolean player1IsReady;
     private boolean player2IsReady;
+    private boolean gameIsFinish;
 
     public Game(String player1Token, String player2Token){
         events = new ArrayList<>();
@@ -33,6 +34,7 @@ public class Game {
         this.table2 = new Table();
         this.watchingTable1 = new WatchingTable();
         this.watchingTable2 = new WatchingTable();
+        this.gameIsFinish = false;
         counter++;
     }
 
@@ -46,6 +48,10 @@ public class Game {
 
     public String getPlayer2Token() {
         return player2Token;
+    }
+
+    public boolean isGameFinish() {
+        return gameIsFinish;
     }
 
     public int attack(int x, int y){
@@ -83,6 +89,7 @@ public class Game {
                 e.printStackTrace();
             }
             if (result == 3){
+                gameIsFinish = true;
                 Repository.getInstance().playerWin(myToken);
                 Repository.getInstance().playerLose(enemyToken);
             }
