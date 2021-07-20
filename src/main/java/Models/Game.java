@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game {
     private static int counter = 1;
@@ -199,6 +200,14 @@ public class Game {
         return this.ID + " " + table1.getShots() + " " + table1.getRemainShips() +  " " +
                 table1.getGoodShots() + " " + table2.getShots() + " " + table2.getRemainShips() +  " " +
                 table2.getGoodShots();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return ID == game.ID;
     }
 
 }
