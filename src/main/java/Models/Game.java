@@ -189,9 +189,9 @@ public class Game {
 
     public String getWatchingData(){
         return Repository.getInstance().getPlayerUsername(player1Token) + " " +
-                new Gson().toJson(watchingTable2) + " " +
+                new Gson().toJson(watchingTable2.getMap()) + " " +
                 Repository.getInstance().getPlayerUsername(player2Token) + " " +
-                new Gson().toJson(watchingTable1);
+                new Gson().toJson(watchingTable1.getMap());
 
     }
 

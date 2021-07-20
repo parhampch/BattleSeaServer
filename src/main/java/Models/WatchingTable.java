@@ -20,4 +20,8 @@ public class WatchingTable {
     public void setDestroyed(int x, int y){
         map[x][y] = -1;
     }
+
+    public int[][] getMap() {
+        return map;
+    }
 }
