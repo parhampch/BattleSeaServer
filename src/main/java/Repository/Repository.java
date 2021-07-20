@@ -207,6 +207,7 @@ public class Repository {
         gameOfPlayers.remove(token1);
         gameOfPlayers.remove(token2);
         games.remove(ID);
+        watchGames.entrySet().removeIf(entry -> ID == entry.getValue().getID());
     }
 
     public ArrayList<String> getScoreBoard(){
@@ -241,7 +242,7 @@ public class Repository {
     }
 
     public String getGameWatchInfo(String token){
-        return watchGames.get(token).getWatchingData();
+        return watchGames.containsKey(token) ? watchGames.get(token).getWatchingData() : "0";
     }
 
     public ArrayList<String> getAllGamesPrimeWatchingData(){
