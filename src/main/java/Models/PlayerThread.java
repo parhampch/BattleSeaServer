@@ -108,6 +108,12 @@ public class PlayerThread extends Thread{
                 else if (command.equals("getInfo")){
                     output = Repository.getInstance().getInfo(token);
                 }
+                else if (command.equals("watchGames")){
+                    Repository.getInstance().addWatchGame(token, Integer.parseInt(split[2]));
+                }
+                else if (command.equals("gameInfo")){
+
+                }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();
 

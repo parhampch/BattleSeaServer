@@ -14,6 +14,8 @@ public class Game {
     private int turn;
     private Table table1;
     private Table table2;
+    private WatchingTable watchingTable1;
+    private WatchingTable watchingTable2;
     private ArrayList<String> events;
     private boolean player1IsReady;
     private boolean player2IsReady;
@@ -28,6 +30,8 @@ public class Game {
         this.player2IsReady = false;
         this.table1 = new Table();
         this.table2 = new Table();
+        this.watchingTable1 = new WatchingTable();
+        this.watchingTable2 = new WatchingTable();
         counter++;
     }
 
@@ -48,12 +52,12 @@ public class Game {
         String enemyToken = "";
         String myToken = "";
         if (turn == 1){
-            result = table2.handleAttack(x, y);
+            result = handleAttackInTables(table2, watchingTable1, x, y);
             myToken = player1Token;
             enemyToken = player2Token;
         }
         else {
-            result = table1.handleAttack(x, y);
+            result = handleAttackInTables(table1, watchingTable2, x, y);
             myToken = player2Token;
             enemyToken = player1Token;
         }
@@ -159,6 +163,33 @@ public class Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private int handleAttackInTables(Table table, WatchingTable watchingTable, int x, int y){
+        int result = table.handleAttack(x, y);
+        if (result == 0)
+            watchingTable.setWater(x, y);
+        else if (result == 1)
+            watchingTable.setDestroyed(x, y);
+        else if (result > 1){
+            watchingTable.setDestroyed(x, y);
+            ArrayList<Integer> watersAroundShip = getWatersAroundShip(x, y);
+            for (int i = 0; i < watersAroundShip.size(); i+=2){
+                int tempX = watersAroundShip.get(i);
+                int tempY = watersAroundShip.get(i + 1);
+                watchingTable.setWater(tempX, tempY);
+            }
+        }
+        return result;
+    }
+
+    public String getWatchingData(){
+        String result = Repository.getInstance().getPlayerUsername(player1Token) + " " +
+                new Gson().toJson(watchingTable2) + " " +
+                Repository.getInstance().getPlayerUsername(player2Token) + " " +
+                new Gson().toJson(watchingTable1);
+        return result;
+
     }
 
 }
