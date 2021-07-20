@@ -211,8 +211,7 @@ public class Repository {
         ArrayList<String> allPlayersString = new ArrayList<>();
         Collections.sort(allPlayers);
         for (Player player : allPlayers) {
-            String temp = player.getUsername() + " " + player.getWinNumber() + " " + player.getLoseNumber()
-                    + " " + player.getScore() + " " ;
+            String temp = player.getUsername() + " " + player.getScore() + " " ;
             String isOnline = onlinePlayers.containsValue(player) ? "T" : "F";
             temp += isOnline;
             allPlayersString.add(temp);
