@@ -241,11 +241,12 @@ public class Repository {
     }
 
     public String getGameWatchInfo(String token){
-        if (watchGames.get(token).isGameFinish()){
-            watchGames.remove(token);
+        try {
+            return watchGames.get(token).getWatchingData();
+        }
+        catch (Exception e){
             return "0";
         }
-        return watchGames.get(token).getWatchingData();
     }
 
     public ArrayList<String> getAllGamesPrimeWatchingData(){
