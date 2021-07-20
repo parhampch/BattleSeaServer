@@ -240,7 +240,15 @@ public class Repository {
         watchGames.put(token, games.get(ID));
     }
 
-    public String getGameInfo(String token){
+    public String getGameWatchInfo(String token){
         return watchGames.get(token).getWatchingData();
+    }
+
+    public ArrayList<String> getAllGamesPrimeWatchingData(){
+        ArrayList<String> result = new ArrayList<>();
+        for (Game game : games.values()) {
+            result.add(game.getPrimeInfoForWatching());
+        }
+        return result;
     }
 }

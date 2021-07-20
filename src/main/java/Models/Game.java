@@ -166,7 +166,11 @@ public class Game {
     }
 
     private int handleAttackInTables(Table table, WatchingTable watchingTable, int x, int y){
+        table.increaseShots();
         int result = table.handleAttack(x, y);
+        if (result > 0)
+            table.increaseGoodShots();
+
         if (result == 0)
             watchingTable.setWater(x, y);
         else if (result == 1)
@@ -184,12 +188,17 @@ public class Game {
     }
 
     public String getWatchingData(){
-        String result = Repository.getInstance().getPlayerUsername(player1Token) + " " +
+        return Repository.getInstance().getPlayerUsername(player1Token) + " " +
                 new Gson().toJson(watchingTable2) + " " +
                 Repository.getInstance().getPlayerUsername(player2Token) + " " +
                 new Gson().toJson(watchingTable1);
-        return result;
 
+    }
+
+    public String getPrimeInfoForWatching(){
+        return this.ID + " " + table1.getShots() + " " + table1.getRemainShips() +  " " +
+                table1.getGoodShots() + " " + table2.getShots() + " " + table2.getRemainShips() +  " " +
+                table2.getGoodShots();
     }
 
 }
