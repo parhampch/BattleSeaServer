@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class Table {
     private int remainShips;
+    private int shots;
+    private int goodShots;
     private int [][] map;
+
 
     public Table() {
         this.remainShips = 10;
+        this.shots = 0;
+        this.goodShots = 0;
     }
 
     public void setMap(int[][] map) {
@@ -137,5 +142,25 @@ public class Table {
             waters.add(tempY);
         }
         return waters;
+    }
+
+    public void increaseShots(){
+        shots++;
+    }
+
+    public void increaseGoodShots(){
+        goodShots++;
+    }
+
+    public int getRemainShips() {
+        return remainShips;
+    }
+
+    public int getShots() {
+        return shots;
+    }
+
+    public int getGoodShots() {
+        return goodShots;
     }
 }

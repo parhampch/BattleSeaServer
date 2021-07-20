@@ -86,7 +86,7 @@ public class PlayerThread extends Thread{
 
                 }
                 else if (command.equals("ongoingGames")){
-                    output = new Gson().toJson(Repository.getInstance().getAllGames());
+                    output = new Gson().toJson(Repository.getInstance().getAllGamesPrimeWatchingData());
                 }
                 else if (command.equals("nextTurn")){
                     Repository.getInstance().nextTurnOfAGame(token);
@@ -107,6 +107,13 @@ public class PlayerThread extends Thread{
                 }
                 else if (command.equals("getInfo")){
                     output = Repository.getInstance().getInfo(token);
+                }
+                else if (command.equals("watchGames")){
+                    Repository.getInstance().addWatchGame(token, Integer.parseInt(split[2]));
+                    output = "1";
+                }
+                else if (command.equals("gameInfo")){
+                    output = Repository.getInstance().getGameWatchInfo(token);
                 }
                 dataOutputStream.writeUTF(output);
                 dataOutputStream.flush();

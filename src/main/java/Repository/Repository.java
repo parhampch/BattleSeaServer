@@ -19,6 +19,7 @@ public class Repository {
     private HashMap<Integer, Game> games;
     private ArrayDeque<String> waitingPlayer;
     private HashMap<String, Game> gameOfPlayers;
+    private HashMap<String, Game> watchGames;
     public int [][][] maps;
 
     private Repository(){
@@ -28,6 +29,7 @@ public class Repository {
         this.games = new HashMap<>();
         this.waitingPlayer = new ArrayDeque<>();
         this.gameOfPlayers = new HashMap<>();
+        this.watchGames = new HashMap<>();
     }
 
     public static Repository getInstance(){
@@ -228,8 +230,25 @@ public class Repository {
         onlinePlayers.get(token).win();
         saveData();
     }
+
     public void playerLose(String token){
         onlinePlayers.get(token).lose();
         saveData();
+    }
+
+    public void addWatchGame(String token, int ID){
+        watchGames.put(token, games.get(ID));
+    }
+
+    public String getGameWatchInfo(String token){
+        return watchGames.get(token).getWatchingData();
+    }
+
+    public ArrayList<String> getAllGamesPrimeWatchingData(){
+        ArrayList<String> result = new ArrayList<>();
+        for (Game game : games.values()) {
+            result.add(game.getPrimeInfoForWatching());
+        }
+        return result;
     }
 }
