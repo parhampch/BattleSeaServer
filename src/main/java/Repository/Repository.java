@@ -212,7 +212,7 @@ public class Repository {
         Collections.sort(allPlayers);
         for (Player player : allPlayers) {
             String temp = player.getUsername() + " " + player.getScore() + " " ;
-            String isOnline = onlinePlayers.containsValue(player) ? "T" : "F";
+            String isOnline = onlinePlayers.containsValue(player) ? "On" : "Off";
             temp += isOnline;
             allPlayersString.add(temp);
         }
