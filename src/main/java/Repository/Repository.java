@@ -115,17 +115,6 @@ public class Repository {
         return gameOfPlayers.get(token).attack(x, y);
     }
 
-    public ArrayList<String> getAllGames(){
-        ArrayList<String> result = new ArrayList<>();
-        for (Game game : games.values()) {
-            String temp = Integer.toString(game.getID()) + " " +
-                    onlinePlayers.get(game.getPlayer1Token()).getUsername() + " " +
-                    onlinePlayers.get(game.getPlayer2Token()).getUsername();
-            result.add(temp);
-        }
-        return result;
-    }
-
     public void removeOnlinePlayer(String token){
         onlinePlayers.remove(token);
     }
@@ -176,7 +165,6 @@ public class Repository {
         int num = new Random().nextInt() % 6;
         num = Math.abs(num);
         gameOfPlayers.get(token).setMap(token, maps[num]);
-        //int num = 0;
         return new Gson().toJson(maps[num]);
     }
 

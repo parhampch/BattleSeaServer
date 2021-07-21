@@ -16,7 +16,6 @@ public class PlayerThread extends Thread{
 
     public PlayerThread(Socket playerSocket) {
         this.playerSocket = playerSocket;
-        this.playerToken = playerToken;
         try {
             dataInputStream = new DataInputStream(new BufferedInputStream(playerSocket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(playerSocket.getOutputStream()));

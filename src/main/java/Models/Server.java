@@ -6,7 +6,6 @@ import util.ConfigLoader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.SecureRandom;
 
 public class Server {
     private final static int PORT = Integer.parseInt(ConfigLoader.readProperty("port"));
@@ -33,7 +32,6 @@ public class Server {
 
     public void run(){
         Repository.getInstance().initialize();
-        SecureRandom secureRandom = new SecureRandom();
         while (true){
             try {
                 System.out.println("Waiting for client ...");
