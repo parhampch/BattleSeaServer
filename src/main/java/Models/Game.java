@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Game {
     private static int counter = 1;
