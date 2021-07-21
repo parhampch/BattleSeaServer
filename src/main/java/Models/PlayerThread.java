@@ -31,7 +31,6 @@ public class PlayerThread extends Thread{
         try{
             String input;
             String output;
-            String[] details;
 
             while (true){
                 input = dataInputStream.readUTF(); // Waiting for command from client
