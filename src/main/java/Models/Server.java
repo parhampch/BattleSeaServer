@@ -11,10 +11,8 @@ import java.util.*;
 
 public class Server {
     private final static int PORT = Integer.parseInt(ConfigLoader.readProperty("port"));
-
     private ServerSocket serverSocket;
     private static Server instance;
-
 
     private Server(){
         try {
