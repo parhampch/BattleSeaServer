@@ -241,13 +241,15 @@ public class Repository {
     }
 
     public String getGameWatchInfo(String token){
+        if (!watchGames.containsKey(token))
+            return "0";
         Game game = watchGames.get(token);
         if (game.isFinished()){
-            String result = watchGames.get(token).getWatchingData() + " T";
+            String result = watchGames.get(token).getWatchingData();
             watchGames.entrySet().removeIf(entry -> game.equals(entry.getValue()));
             return result;
         }
-        return watchGames.get(token).getWatchingData() + " F";
+        return watchGames.get(token).getWatchingData() ;
     }
 
     public ArrayList<String> getAllGamesPrimeWatchingData(){
