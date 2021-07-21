@@ -207,6 +207,7 @@ public class Game {
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
         return ID == game.ID;
+
     }
 
 }
