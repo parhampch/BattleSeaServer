@@ -10,7 +10,7 @@ import java.util.Base64;
 
 public class PlayerThread extends Thread{
     private String playerToken;
-    private Socket playerSocket;
+    private final Socket playerSocket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
@@ -71,7 +71,7 @@ public class PlayerThread extends Thread{
                     int x = Integer.parseInt(split[2]);
                     int y = Integer.parseInt(split[3]);
                     int result = Repository.getInstance().attackInGame(token, x, y);
-                    String massage = Integer.toString(result) + " " + Integer.toString(x) + " " + Integer.toString(y) + " ";
+                    String massage = result + " " + x + " " + y + " ";
 
                     if (Repository.getInstance().isPlayersTurn(token))
                         massage += "T";
@@ -127,7 +127,7 @@ public class PlayerThread extends Thread{
 
     private String generateToken() {
         SecureRandom secureRandom = new SecureRandom();
-        byte bytes[] = new byte[20];
+        byte[] bytes = new byte[20];
         secureRandom.nextBytes(bytes);
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String token = encoder.encodeToString(bytes);

@@ -8,15 +8,15 @@ import java.util.ArrayList;
 
 public class Game {
     private static int counter = 1;
-    private int ID;
-    private String  player1Token;
-    private String player2Token;
+    private final int ID;
+    private final String  player1Token;
+    private final String player2Token;
     private int turn;
-    private Table table1;
-    private Table table2;
-    private WatchingTable watchingTable1;
-    private WatchingTable watchingTable2;
-    private ArrayList<String> events;
+    private final Table table1;
+    private final Table table2;
+    private final WatchingTable watchingTable1;
+    private final WatchingTable watchingTable2;
+    private final ArrayList<String> events;
     private boolean player1IsReady;
     private boolean player2IsReady;
     private boolean isFinished;
@@ -69,7 +69,7 @@ public class Game {
         }
         if (result == 0){
             try {
-                String massage = "T " + Integer.toString(result + 1) + " " +  Integer.toString(x) + " " +  Integer.toString(y);
+                String massage = "T " + (result + 1) + " " + x + " " + y;
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().writeUTF(massage);
                 Repository.getInstance().getPlayerThread(enemyToken).getDataOutputStream().flush();
             } catch (IOException e) {
@@ -78,7 +78,7 @@ public class Game {
             this.nextTurn();
         }
         else {
-            String massage = "F " + Integer.toString(result + 1) + " " +  Integer.toString(x) + " " +  Integer.toString(y);
+            String massage = "F " + (result + 1) + " " + x + " " + y;
             if (result > 1)
                 massage += " " + new Gson().toJson(getWatersAroundShip(x, y));
             try {
@@ -132,13 +132,9 @@ public class Game {
 
     public boolean isMyTurn(String token){
         if (token.equals(player1Token)){
-            if (turn == 1)
-                return true;
-            return false;
+            return turn == 1;
         }
-        if (turn == 2)
-            return true;
-        return false;
+        return turn == 2;
     }
 
     public ArrayList<Integer> getWatersAroundShip(int x, int y){
