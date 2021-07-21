@@ -242,7 +242,7 @@ public class Repository {
 
     public String getGameWatchInfo(String token){
         try {
-            return watchGames.get(token).getWatchingData();
+            return watchGames.containsKey(token) ? watchGames.get(token).getWatchingData() : "0";
         }
         catch (Exception e){
             return "0";
