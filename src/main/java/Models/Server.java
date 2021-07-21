@@ -20,7 +20,11 @@ public class Server {
         try {
             this.serverSocket = new ServerSocket(PORT);
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                this.serverSocket = new ServerSocket(8000);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 

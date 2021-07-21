@@ -121,7 +121,17 @@ public class PlayerThread extends Thread{
 
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("player disconnected");
+            try {
+                for (int i = 0; i < 60; i++){
+                    sleep(i * 1000);
+                    if (playerSocket.isConnected())
+                        break;
+                }
+
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         }
     }
 
