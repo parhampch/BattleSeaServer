@@ -13,16 +13,7 @@ import java.util.HashMap;
 
 public class ServerMain {
     public static void main(String[] args) {
-        HashMap<String, Integer> test = new HashMap<>();
-        test.put("1", 1);
-        test.put("2", 2);
-        test.put("3", 3);
-        test.put("4", 2);
-
-        test.entrySet().removeIf(entry -> 2 == entry.getValue());
-        System.out.println(test);
-        //Repository.getInstance().initialize();
-        //
-        // Server.getInstance().run();
+        Repository.getInstance().initialize();
+        Server.getInstance().run();
     }
 }
